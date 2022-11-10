@@ -1,10 +1,12 @@
 import os
+import webbrowser
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 #from flask_migrate import Migrate
 from os import environ
-from remotejob.config import DEV_DB, PROD_DB
+from .config import DEV_DB, PROD_DB
+from .ext import db
 
 # Create a login manager object
 app = Flask(__name__)
@@ -19,7 +21,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] =  environ.get('DATABASE_URL').replace("postgres", "postgresql") or DEV_DB
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
 #Migrate(app,db)
 
 from remotejob import routes
